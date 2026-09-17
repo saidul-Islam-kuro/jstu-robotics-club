@@ -64,6 +64,21 @@ export default function Footer() {
         .footer-author-accent {
           color: var(--accent);
         }
+        @media (max-width: 640px) {
+          .footer-inner {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+          .footer-links {
+            justify-content: center;
+            flex-wrap: wrap;
+          }
+          .footer-footnote {
+            font-size: 13px;
+            line-height: 1.5;
+          }
+        }
       `}</style>
     </footer>
   )

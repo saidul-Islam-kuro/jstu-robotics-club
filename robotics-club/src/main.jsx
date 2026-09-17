@@ -6,7 +6,10 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import './index.css'
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
+    const registrations = await navigator.serviceWorker.getRegistrations()
+    await Promise.all(registrations.map((registration) => registration.unregister()))
+
     navigator.serviceWorker.register('/sw.js').catch((error) => {
       console.error('Service worker registration failed:', error)
     })
