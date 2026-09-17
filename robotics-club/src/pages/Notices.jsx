@@ -7,6 +7,21 @@ export default function Notices() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
+  const formatNoticeBody = (text = '') => {
+    const escaped = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+
+    return escaped
+      .replace(/(https?:\/\/[^\s<>"]+|www\.[^\s<>"']+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>')
+      .replace(/\n/g, '<br />')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+  }
+
   useEffect(() => {
     let mounted = true
     supabase
@@ -48,7 +63,7 @@ export default function Notices() {
               </time>
             </div>
             <h2 className="notice-title">{n.title}</h2>
-            <p className="notice-body">{n.body}</p>
+            <div className="notice-body" dangerouslySetInnerHTML={{ __html: formatNoticeBody(n.body) }} />
           </article>
         ))}
       </div>
@@ -80,9 +95,17 @@ export default function Notices() {
         .notice-title { font-size: 1.15rem; margin-bottom: 10px; }
         .notice-body {
           color: var(--text-dim);
-          line-height: 1.7;
+          line-height: 1.8;
           white-space: pre-wrap;
+          word-break: break-word;
         }
+        .notice-body a {
+          color: var(--accent);
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+        .notice-body strong { color: var(--text); }
+        .notice-body em { color: var(--text-dim); }
       `}</style>
     </div>
   )

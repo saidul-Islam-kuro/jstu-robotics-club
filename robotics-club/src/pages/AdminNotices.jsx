@@ -78,6 +78,7 @@ export default function AdminNotices() {
         <div className="field">
           <label htmlFor="body">Body</label>
           <textarea id="body" value={body} onChange={(e) => setBody(e.target.value)} required style={{ minHeight: 120 }} />
+          <span className="field-hint">Use plain text, **bold**, *italic*, and paste URLs to make them clickable.</span>
         </div>
         <label className="admin-checkbox">
           <input type="checkbox" checked={pinned} onChange={(e) => setPinned(e.target.checked)} />
