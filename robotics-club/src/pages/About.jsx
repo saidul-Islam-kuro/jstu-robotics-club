@@ -2,16 +2,28 @@ import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader.jsx'
 
 const timeline = [
-  { year: 'Founding', text: 'The club was formed by a small group of students who wanted a dedicated space for hands-on robotics outside the classroom. Replace this with your club\u2019s real founding story.' },
-  { year: 'Workshops begin', text: 'Weekly build sessions started covering microcontrollers, sensors, and basic mechanical design.' },
-  { year: 'First competition', text: 'The club entered its first inter-university robotics competition. Add your actual results and placements here.' },
+  { year: 'Founding', text: 'The club was formed by a small group of students who wanted a dedicated space for hands-on robotics outside the classroom.' },
+  { year: 'Workshops begin', text: 'N/A' },
+  { year: 'First competition', text: 'N/A' },
   { year: 'Today', text: 'The club now runs project teams, an onboarding track for first-years, and a public notice board and member directory — this very website.' },
 ]
 
 const projects = [
-  { name: 'Line Follower Bot', desc: 'A sensor-guided autonomous bot built for regional line-following competitions. Swap in your real project name and description.' },
-  { name: 'Robotic Arm', desc: 'A 4-DOF pick-and-place arm used as a teaching project for new members learning servo control.' },
-  { name: 'Autonomous Rover', desc: 'An obstacle-avoiding rover built around an ultrasonic sensor array and a custom PID controller.' },
+  {
+    name: 'Line Follower Bot',
+    desc: 'A sensor-guided autonomous bot built for regional line-following competitions and beginner robotics training.',
+    image: '/line-follower-bot.jpg',
+  },
+  {
+    name: 'Chunked Base64 Bot',
+    desc: 'A Base64-Streamed Multimodal AI companion on the ESP32-C3.',
+    image: '/chunked-Based64-bot.jpeg',
+  },
+  {
+    name: 'Autonomous Rover',
+    desc: 'An obstacle-avoiding rover built around an ultrasonic sensor array and a custom navigation routine.',
+    image: '/Autonomous-Rover.jpg',
+  },
 ]
 
 export default function About() {
@@ -20,7 +32,7 @@ export default function About() {
       <PageHeader
         eyebrow="Club tour"
         title="Who we are and what we build"
-        lead="A walk through the club — replace every line on this page with your club's real history, projects, and photos."
+        lead="A walk through the club — from our founding to our current projects and membership opportunities."
       />
 
       <section className="about-section">
@@ -40,7 +52,7 @@ export default function About() {
         <div className="project-grid">
           {projects.map((p) => (
             <div className="project-card card" key={p.name}>
-              <div className="project-photo" aria-hidden="true" />
+              <img src={p.image} alt={p.name} className="project-photo" />
               <div className="project-body">
                 <h3 className="project-name">{p.name}</h3>
                 <p className="project-desc">{p.desc}</p>
@@ -94,10 +106,12 @@ export default function About() {
         }
         .project-card { overflow: hidden; }
         .project-photo {
-          height: 140px;
-          background:
-            repeating-linear-gradient(135deg, var(--bg-raised) 0 10px, var(--bg-card) 10px 20px);
+          width: 100%;
+          height: 180px;
+          object-fit: cover;
+          display: block;
           border-bottom: 1px solid var(--line-soft);
+          background: var(--bg-raised);
         }
         .project-body { padding: 20px; }
         .project-name {
