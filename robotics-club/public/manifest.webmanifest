@@ -1,0 +1,18 @@
+{
+  "name": "JSTU Robotics Club",
+  "short_name": "JSTU Robotics",
+  "description": "Jamalpur Science & Technology University Robotics Club membership portal and announcements.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0E1420",
+  "theme_color": "#0E1420",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
