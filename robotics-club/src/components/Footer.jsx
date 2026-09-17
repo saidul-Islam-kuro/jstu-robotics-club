@@ -16,10 +16,14 @@ export default function Footer() {
         </div>
       </div>
 
+      <div className="shell footer-footnote">
+        Developed By <span className="footer-author">Saidul Islam</span> <span className="footer-author-accent">Kuro</span>
+      </div>
+
       <style>{`
         .footer {
           border-top: 1px solid var(--line-soft);
-          padding: 36px 0;
+          padding: 36px 0 18px;
           margin-top: 80px;
         }
         .footer-inner {
@@ -46,6 +50,20 @@ export default function Footer() {
           color: var(--text-dim);
         }
         .footer-links a:hover { color: var(--text); }
+        .footer-footnote {
+          text-align: center;
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--text-faint);
+          padding-bottom: 18px;
+          letter-spacing: 0.01em;
+        }
+        .footer-author {
+          color: var(--text);
+        }
+        .footer-author-accent {
+          color: var(--accent);
+        }
       `}</style>
     </footer>
   )
