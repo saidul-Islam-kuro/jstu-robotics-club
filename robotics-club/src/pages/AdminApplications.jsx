@@ -19,30 +19,9 @@ export default function AdminApplications() {
 
   useEffect(load, [])
 
-  const openMailto = (email, subject, body) => {
-    const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-
-    const fallback = () => {
-      const text = `To: ${email}\nSubject: ${subject}\n\n${body}`
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).catch(() => {})
-      }
-      window.alert(
-        'No email app was detected in this browser.\n\nThe email draft was copied to your clipboard instead.\n\nPaste it into Gmail/Outlook and send it manually.'
-      )
-    }
-
-    try {
-      const anchor = document.createElement('a')
-      anchor.href = mailto
-      anchor.style.display = 'none'
-      document.body.appendChild(anchor)
-      anchor.click()
-      document.body.removeChild(anchor)
-      setTimeout(fallback, 400)
-    } catch {
-      fallback()
-    }
+  const openGmailCompose = (email, subject, body) => {
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer')
   }
 
   const sendAcceptanceEmail = (application) => {
@@ -54,7 +33,7 @@ export default function AdminApplications() {
       'Congratulations — your membership application has been accepted by the club committee.',
       '',
       'Please complete your member signup using the link below:',
-      'https://your-project-url.vercel.app/signup',
+      `${window.location.origin}/signup`,
       '',
       'Once you sign up, you will be able to update your profile and access member features.',
       '',
@@ -62,7 +41,7 @@ export default function AdminApplications() {
       'JSTU Robotics Club',
     ].join('\n')
 
-    openMailto(application.email, subject, body)
+    openGmailCompose(application.email, subject, body)
   }
 
   const sendFeeReminderEmail = (application) => {
@@ -83,7 +62,7 @@ export default function AdminApplications() {
       'JSTU Robotics Club',
     ].join('\n')
 
-    openMailto(application.email, subject, body)
+    openGmailCompose(application.email, subject, body)
   }
 
   const updateStatus = async (id, status) => {
@@ -92,13 +71,23 @@ export default function AdminApplications() {
   }
 
   const handleAccept = async (application) => {
-    await updateStatus(application.id, 'accepted')
-    sendAcceptanceEmail(application)
+    try {
+      sendAcceptanceEmail(application)
+      await updateStatus(application.id, 'accepted')
+      window.alert('The Gmail compose page has been opened with the ready-made acceptance email.')
+    } catch (error) {
+      window.alert(error.message || 'Could not open Gmail compose.')
+    }
   }
 
   const handleFeeReminder = async (application) => {
-    await updateStatus(application.id, 'pending')
-    sendFeeReminderEmail(application)
+    try {
+      sendFeeReminderEmail(application)
+      await updateStatus(application.id, 'pending')
+      window.alert('The Gmail compose page has been opened with the fee reminder email.')
+    } catch (error) {
+      window.alert(error.message || 'Could not open Gmail compose.')
+    }
   }
 
   const filtered = applications.filter((a) => filter === 'all' || a.status === filter)
